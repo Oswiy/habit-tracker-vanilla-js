@@ -27,6 +27,23 @@ function addHabit(e) {
 
   if (!habit) return;
 
+  let duplicate = false;
+
+  for (const item of habits) {
+    if (habit === item.name.toLowerCase()) {
+      addHabitInput.value = "";
+      habitList.textContent = "This habit already exists";
+      habitList.style.textAlign = "Center";
+      habitList.style.fontSize = "1.3em";
+      setTimeout(() => {
+        habitList.style.textAlign = "";
+        habitList.style.fontSize = "";
+        renderHabits();
+      }, 1200);
+      return;
+    }
+  }
+
   habits = [...habits, { name: habit, status: "active", id: autoIdCounter() }];
   addHabitInput.value = "";
   storeHabits();
@@ -101,7 +118,6 @@ habitList.addEventListener("click", (e) => {
 
   if (e.target.classList.contains("doneBtn")) {
     habits[habitIndex].status = "completed";
-    
   } else if (e.target.classList.contains("deleteBtn")) {
     console.log(habitIndex);
     console.log(habitCardId);
