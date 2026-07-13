@@ -33,6 +33,8 @@ function addHabit(e) {
   renderHabits();
 }
 
+addHabitForm.addEventListener("submit", addHabit);
+
 function searchHabit(e) {
   e.preventDefault();
   const target = searchHabitInput.value.trim().toLowerCase();
@@ -42,7 +44,7 @@ function searchHabit(e) {
   if (match.length === 0) {
     const h4ErrorDisplay = document.createElement("h4");
     h4ErrorDisplay.textContent = `${target} not found.`;
-    h4ErrorDisplay.id = "searchErrorDisplay"
+    h4ErrorDisplay.id = "searchErrorDisplay";
     habitList.textContent = "";
     habitList.append(h4ErrorDisplay);
     searchHabitInput.value = "";
@@ -68,13 +70,16 @@ function renderHabits(arr = habits) {
 
     //  div:
     divHabitCard.classList.add("habitCard");
+    divHabitCard.dataset.cardId = element.id;
     //  habit name:
     h4habitName.textContent = `Name: ${element.name}`;
     //  habit status:
     h4status.textContent = `Status: ${element.status}`;
     // done btn:
+    doneBtn.classList.add("doneBtn");
     doneBtn.textContent = "Done";
     // delete btn:
+    deleteBtn.classList.add("deleteBtn");
     deleteBtn.textContent = "Delete";
 
     divNameStatus.classList.add("divNameStatus");
@@ -86,5 +91,24 @@ function renderHabits(arr = habits) {
   });
 }
 
-addHabitForm.addEventListener("submit", addHabit);
+habitList.addEventListener("click", (e) => {
+  const habitCard = e.target.closest(".habitCard");
+
+  if (!habitCard) return;
+
+  const habitCardId = habitCard.dataset.cardId;
+  const habitIndex = habits.findIndex((habit) => habit.id == habitCardId);
+
+  if (e.target.classList.contains("doneBtn")) {
+    habits[habitIndex].status = "completed";
+    
+  } else if (e.target.classList.contains("deleteBtn")) {
+    console.log(habitIndex);
+    console.log(habitCardId);
+    habits.splice(habitIndex, 1);
+  }
+  storeHabits();
+  renderHabits();
+});
+
 renderHabits();
