@@ -1,0 +1,28 @@
+header {
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+#addHabitForm {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  gap: 10px;
+}
+
+#addHabitInput {
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+#addHabitForm button {
+    border: none;
+    padding: 5px;
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+}
