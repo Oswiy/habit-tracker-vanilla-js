@@ -1,7 +1,12 @@
+body {
+    margin: 0px;
+}
+
 header {
   font-size: 3rem;
   display: flex;
   justify-content: center;
+  margin-top: 40px;
 }
 
 #addHabitForm {
@@ -25,6 +30,32 @@ header {
   background-color: black;
   color: white;
   border-radius: 4px;
+}
+
+#searchHabitForm{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 5px;
+}
+
+#searchHabitInput{
+    width: 80%;
+    height: 2em;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: white;
+}
+
+#searchHabitForm button {
+    border: none;
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    height: inherit;
 }
 
 #habitList {

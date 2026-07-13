@@ -10,7 +10,6 @@ function storeHabits() {
 
 function idProvider() {
   const habitsId = habits.map((habit) => habit.id);
-  console.log(habitsId);
   let count = habits.length > 0 ? Math.max(...habitsId) : -1;
   return function idCountIncrement() {
     count++;
