@@ -1,6 +1,8 @@
 const addHabitForm = document.getElementById("addHabitForm");
 const addHabitInput = document.getElementById("addHabitInput");
 const habitList = document.getElementById("habitList");
+const searchHabitForm = document.getElementById("searchHabitForm");
+const searchHabitInput = document.getElementById("searchHabitInput");
 
 let habits = JSON.parse(localStorage.getItem("habits")) || [];
 
@@ -31,9 +33,31 @@ function addHabit(e) {
   renderHabits();
 }
 
-function renderHabits() {
+function searchHabit(e) {
+  e.preventDefault();
+  const target = searchHabitInput.value.trim().toLowerCase();
+  if (!target) return;
+
+  const match = habits.filter((habit) => habit.name.toLowerCase() === target);
+  if (match.length === 0) {
+    const h4ErrorDisplay = document.createElement("h4");
+    h4ErrorDisplay.textContent = `${target} not found.`;
+    h4ErrorDisplay.id = "searchErrorDisplay"
+    habitList.textContent = "";
+    habitList.append(h4ErrorDisplay);
+    searchHabitInput.value = "";
+    return;
+  }
+
+  searchHabitInput.value = "";
+  renderHabits(match);
+}
+
+searchHabitForm.addEventListener("submit", searchHabit);
+
+function renderHabits(arr = habits) {
   habitList.textContent = "";
-  habits.forEach((habit) => {
+  arr.forEach((element) => {
     const divHabitCard = document.createElement("div");
     const divNameStatus = document.createElement("div");
     const h4habitName = document.createElement("h4");
@@ -45,9 +69,9 @@ function renderHabits() {
     //  div:
     divHabitCard.classList.add("habitCard");
     //  habit name:
-    h4habitName.textContent = `Name: ${habit.name}`;
+    h4habitName.textContent = `Name: ${element.name}`;
     //  habit status:
-    h4status.textContent = `Status: ${habit.status}`;
+    h4status.textContent = `Status: ${element.status}`;
     // done btn:
     doneBtn.textContent = "Done";
     // delete btn:

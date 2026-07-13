@@ -1,5 +1,5 @@
 body {
-    margin: 0px;
+  margin: 0px;
 }
 
 header {
@@ -32,37 +32,37 @@ header {
   border-radius: 4px;
 }
 
-#searchHabitForm{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-    gap: 5px;
+#searchHabitForm {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: 5px;
 }
 
-#searchHabitInput{
-    width: 80%;
-    height: 2em;
-    border: 1px solid black;
-    border-radius: 4px;
-    background-color: white;
+#searchHabitInput {
+  width: 80%;
+  height: 2em;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: white;
 }
 
 #searchHabitForm button {
-    border: none;
-    background-color: black;
-    color: white;
-    border-radius: 4px;
-    height: inherit;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+  height: inherit;
 }
 
 #habitList {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 20px 0px 20px;
 }
 
 .habitCard {
@@ -70,6 +70,9 @@ header {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 15px;
+  background-color: rgba(204, 204, 204, 0.785);
+  border-radius: 6px;
 }
 
 .divNameStatus {
@@ -84,7 +87,8 @@ header {
 }
 
 .divNameStatus h4:last-child {
-    color: rgba(0, 0, 0, 0.644);
+  color: rgba(0, 0, 0, 0.644);
+  margin: 0px 0px 0px 30px;
 }
 
 .divBtnContainer {
@@ -92,4 +96,23 @@ header {
   flex-direction: row;
   height: 30px;
   align-items: center;
+  gap: 10px;
+}
+
+.divBtnContainer button {
+    color: white;
+    background-color: black;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.divBtnContainer button:last-child {
+    background-color: red;
+}
+
+#searchErrorDisplay {
+    font-size: 20px;
+    text-align: center;
+    color: rgb(195, 0, 0);
 }
