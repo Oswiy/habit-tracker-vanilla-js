@@ -41,6 +41,7 @@ function addHabit(e) {
   habits = [...habits, { name: habit, status: "active", id: autoIdCounter() }];
   addHabitInput.value = "";
   storeHabits();
+  resetFormatHabitList();
   renderHabits();
 }
 
@@ -134,39 +135,49 @@ habitList.addEventListener("click", (e) => {
     habits.splice(habitIndex, 1);
   } else if (e.target.classList.contains("editBtn")) {
     editForm.classList.toggle("hiddenEdit");
-
-    editForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const formData = new FormData(editForm);
-      const editInput = formData.get("editInput").trim();
-
-      if (!editInput) return;
-
-      for (const item of habits) {
-        if (editInput.toLowerCase() === item.name.toLowerCase()) {
-          console.log("duplicate");
-          habitList.textContent =
-            "This habit already exists, please change to another name.";
-          formatHabitList();
-          editForm.classList.toggle("hiddenEdit");
-          setTimeout(() => {
-            resetFormatHabitList();
-            renderHabits();
-          }, 1200);
-          return;
-        }
-      }
-      habit.name = editInput;
-      storeHabits();
-      renderHabits();
-      editForm.classList.toggle("hiddenEdit");
-    });
+    editForm.dataset.editingId = habitCardId;
   }
   storeHabits();
   renderHabits();
-  document.getElementById("editInput").textContent = "";
+  document.getElementById("editInput").value = "";
 });
+
+// Edit feature:
+
+editForm.addEventListener("submit", editHabit);
+
+function editHabit(e) {
+  e.preventDefault();
+
+  const habitCardId = editForm.dataset.editingId;
+  const habitIndex = habits.findIndex((habit) => habit.id == habitCardId);
+
+  if (habitIndex === -1) return;
+
+  const habit = habits[habitIndex];
+  const formData = new FormData(editForm);
+  const editInput = formData.get("editInput").trim();
+
+  if (!editInput) return;
+
+  for (const item of habits) {
+    if (editInput.toLowerCase() === item.name.toLowerCase()) {
+      habitList.textContent =
+        "This habit already exists, please change to another name.";
+      formatHabitList();
+      editForm.classList.toggle("hiddenEdit");
+      setTimeout(() => {
+        resetFormatHabitList();
+        renderHabits();
+      }, 1200);
+      return;
+    }
+  }
+  habit.name = editInput;
+  storeHabits();
+  renderHabits();
+  editForm.classList.toggle("hiddenEdit");
+}
 
 const filterBtn = document.getElementById("filterBtn");
 const filterCard = document.getElementById("filterCard");
