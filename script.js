@@ -105,7 +105,7 @@ habitList.addEventListener("click", (e) => {
   const habitCardId = habitCard.dataset.cardId;
   const habitIndex = habits.findIndex((habit) => habit.id == habitCardId);
 
-  if (habitIndex.length === 0) return;
+  if (habitIndex.length === -1) return;
 
   if (e.target.classList.contains("doneBtn")) {
     habits[habitIndex].status = "completed";
