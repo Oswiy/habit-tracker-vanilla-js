@@ -90,7 +90,7 @@ header {
 
 .divNameStatus h4:last-child {
   color: rgba(0, 0, 0, 0.644);
-  margin: 0px 0px 0px 30px;
+  margin: 0px 0px 0px 10px;
 }
 
 .divBtnContainer {
@@ -109,7 +109,7 @@ header {
   border-radius: 4px;
 }
 
-.divBtnContainer button:last-child {
+.divBtnContainer .deleteBtn {
   background-color: red;
 }
 
@@ -170,4 +170,39 @@ header {
 
 .active {
   border: 1px solid rgb(35, 134, 255);
+}
+
+#editForm {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  text-align: center;
+  height: 100px;
+  background-color: gray;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 70%;
+}
+
+#editForm h3{
+  margin: 10px 0px 20px 0px;
+}
+
+#editForm input, #editForm button{
+  border-radius: 4px;
+  border: 1px solid black;
+}
+
+#editForm button{
+  margin-top: 5px;
+  padding: 5px;
+  color: white;
+  background-color: black;
+}
+
+.hiddenEdit {
+  display: none !important;
 }

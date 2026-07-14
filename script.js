@@ -3,6 +3,7 @@ const addHabitInput = document.getElementById("addHabitInput");
 const habitList = document.getElementById("habitList");
 const searchHabitForm = document.getElementById("searchHabitForm");
 const searchHabitInput = document.getElementById("searchHabitInput");
+const editForm = document.getElementById("editForm");
 
 let habits = JSON.parse(localStorage.getItem("habits")) || [];
 
@@ -23,7 +24,8 @@ const autoIdCounter = idProvider();
 
 function addHabit(e) {
   e.preventDefault();
-  const habit = addHabitInput.value.trim();
+  const formData = new FormData(addHabitForm);
+  const habit = formData.get("habitInput").trim();
 
   if (!habit) return;
 
@@ -46,7 +48,8 @@ addHabitForm.addEventListener("submit", addHabit);
 
 function searchHabit(e) {
   e.preventDefault();
-  const target = searchHabitInput.value.trim().toLowerCase();
+  const formData = new FormData(searchHabitForm);
+  const target = formData.get("searchInput").trim().toLowerCase();
   if (!target) return;
 
   const match = habits.filter((habit) => habit.name.toLowerCase() === target);
@@ -73,6 +76,7 @@ function renderHabits(arr = habits) {
     const divBtnContainer = document.createElement("div");
     const doneBtn = document.createElement("button");
     const deleteBtn = document.createElement("button");
+    const editBtn = document.createElement("button");
 
     const statusColor =
       element.status === "active"
@@ -87,7 +91,6 @@ function renderHabits(arr = habits) {
     //  habit status:
     h4status.textContent = `Status: ${element.status}`;
     // done btn:
-
     doneBtn.classList.add("doneBtn");
     switch (element.status) {
       case "completed":
@@ -96,14 +99,16 @@ function renderHabits(arr = habits) {
       default:
         doneBtn.textContent = "Done";
     }
-
     // delete btn:
     deleteBtn.classList.add("deleteBtn");
     deleteBtn.textContent = "Delete";
+    // edit btn:
+    editBtn.textContent = "✎";
+    editBtn.classList.add("editBtn");
 
     divNameStatus.classList.add("divNameStatus");
     divNameStatus.append(h4habitName, h4status);
-    divBtnContainer.append(doneBtn, deleteBtn);
+    divBtnContainer.append(doneBtn, deleteBtn, editBtn);
     divBtnContainer.classList.add("divBtnContainer");
     divHabitCard.append(divNameStatus, divBtnContainer);
     habitList.append(divHabitCard);
@@ -117,18 +122,50 @@ habitList.addEventListener("click", (e) => {
 
   const habitCardId = habitCard.dataset.cardId;
   const habitIndex = habits.findIndex((habit) => habit.id == habitCardId);
+  const habit = habits[habitIndex];
 
-  if (habitIndex.length === -1) return;
+  if (habitIndex === -1) return;
 
   if (e.target.classList.contains("doneBtn")) {
-    if (habits[habitIndex].status === "active") {
-      habits[habitIndex].status = "completed";
-    } else habits[habitIndex].status = "active";
+    if (habit.status === "active") {
+      habit.status = "completed";
+    } else habit.status = "active";
   } else if (e.target.classList.contains("deleteBtn")) {
     habits.splice(habitIndex, 1);
+  } else if (e.target.classList.contains("editBtn")) {
+    editForm.classList.toggle("hiddenEdit");
+
+    editForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(editForm);
+      const editInput = formData.get("editInput").trim();
+
+      if (!editInput) return;
+
+      for (const item of habits) {
+        if (editInput.toLowerCase() === item.name.toLowerCase()) {
+          console.log("duplicate");
+          habitList.textContent =
+            "This habit already exists, please change to another name.";
+          formatHabitList();
+          editForm.classList.toggle("hiddenEdit");
+          setTimeout(() => {
+            resetFormatHabitList();
+            renderHabits();
+          }, 1200);
+          return;
+        }
+      }
+      habit.name = editInput;
+      storeHabits();
+      renderHabits();
+      editForm.classList.toggle("hiddenEdit");
+    });
   }
   storeHabits();
   renderHabits();
+  document.getElementById("editInput").textContent = "";
 });
 
 const filterBtn = document.getElementById("filterBtn");

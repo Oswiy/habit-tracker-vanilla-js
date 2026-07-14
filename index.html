@@ -10,11 +10,11 @@
     <header>Habit Tracker</header>
     <main>
       <form id="addHabitForm">
-        <input type="text" id="addHabitInput" />
+        <input type="text" id="addHabitInput" name="habitInput"/>
         <button type="submit">Add</button>
       </form>
       <form id="searchHabitForm">
-        <input type="text" id="searchHabitInput" />
+        <input type="text" id="searchHabitInput" name="searchInput" />
         <button type="submit">Search</button>
       </form>
 
@@ -46,6 +46,11 @@
         </div>
         <div id="habitList"></div>
       </div>
+      <form id="editForm" class="hiddenEdit">
+        <h3>Change to: </h3>
+        <input type="text" name="editInput" id="editInput">
+        <button type="submit">Change</button>
+      </form>
     </main>
     <script src="script.js"></script>
   </body>
