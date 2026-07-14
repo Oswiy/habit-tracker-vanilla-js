@@ -74,16 +74,29 @@ function renderHabits(arr = habits) {
     const doneBtn = document.createElement("button");
     const deleteBtn = document.createElement("button");
 
+    const statusColor =
+      element.status === "active"
+        ? "rgba(204, 204, 204, 0.785)"
+        : "rgba(153, 255, 153, 0.781)";
     //  div:
     divHabitCard.classList.add("habitCard");
+    divHabitCard.style.backgroundColor = statusColor;
     divHabitCard.dataset.cardId = element.id;
     //  habit name:
     h4habitName.textContent = `Name: ${element.name}`;
     //  habit status:
     h4status.textContent = `Status: ${element.status}`;
     // done btn:
+
     doneBtn.classList.add("doneBtn");
-    doneBtn.textContent = "Done";
+    switch (element.status) {
+      case "completed":
+        doneBtn.textContent = "Undo";
+        break;
+      default:
+        doneBtn.textContent = "Done";
+    }
+
     // delete btn:
     deleteBtn.classList.add("deleteBtn");
     deleteBtn.textContent = "Delete";
@@ -108,7 +121,9 @@ habitList.addEventListener("click", (e) => {
   if (habitIndex.length === -1) return;
 
   if (e.target.classList.contains("doneBtn")) {
-    habits[habitIndex].status = "completed";
+    if (habits[habitIndex].status === "active") {
+      habits[habitIndex].status = "completed";
+    } else habits[habitIndex].status = "active";
   } else if (e.target.classList.contains("deleteBtn")) {
     habits.splice(habitIndex, 1);
   }

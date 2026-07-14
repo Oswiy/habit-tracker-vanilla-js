@@ -67,13 +67,14 @@ header {
 }
 
 .habitCard {
+  position: static;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  background-color: rgba(204, 204, 204, 0.785);
   border-radius: 6px;
+  border: 1.5px solid black;
 }
 
 .divNameStatus {
