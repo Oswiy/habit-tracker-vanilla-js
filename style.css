@@ -9,7 +9,7 @@ header {
   margin-top: 40px;
 }
 
-#addHabitForm {
+#searchHabitForm {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
@@ -19,12 +19,12 @@ header {
   gap: 10px;
 }
 
-#addHabitInput {
+#searchHabitInput {
   border: 1px solid black;
   border-radius: 4px;
 }
 
-#addHabitForm button {
+#searchHabitForm button {
   border: none;
   padding: 5px;
   background-color: black;
@@ -32,7 +32,8 @@ header {
   border-radius: 4px;
 }
 
-#searchHabitForm {
+/* new */
+#addHabitForm {
   margin-top: 20px;
   display: flex;
   flex-direction: row;
@@ -42,7 +43,7 @@ header {
   gap: 5px;
 }
 
-#searchHabitInput {
+#addHabitInput {
   width: 80%;
   height: 2em;
   border: 1px solid black;
@@ -50,7 +51,7 @@ header {
   background-color: white;
 }
 
-#searchHabitForm button {
+#addHabitForm button {
   border: none;
   background-color: black;
   color: white;
@@ -100,19 +101,72 @@ header {
 }
 
 .divBtnContainer button {
-    color: white;
-    background-color: black;
-    border: none;
-    padding: 5px;
-    border-radius: 4px;
+  color: white;
+  background-color: black;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
 }
 
 .divBtnContainer button:last-child {
-    background-color: red;
+  background-color: red;
 }
 
 #searchErrorDisplay {
-    font-size: 20px;
-    text-align: center;
-    color: rgb(195, 0, 0);
+  font-size: 20px;
+  text-align: center;
+  color: rgb(195, 0, 0);
+}
+
+#habitListHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 15px 15px 5px 15px;
+}
+
+#habitListHeader h2 {
+  margin: 0px;
+}
+
+#habitListHeader button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#filterCard {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(0, 0, 0);
+  padding: 20px;
+  gap: 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 200;
+  right: 90px;
+}
+
+#filterCard p {
+  margin: 0px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+#filterCard button {
+  padding: 3px 4px 3px 4px;
+  background-color: white;
+  color: black;
+}
+
+.active {
+  border: 1px solid rgb(35, 134, 255);
 }

@@ -27,19 +27,11 @@ function addHabit(e) {
 
   if (!habit) return;
 
-  let duplicate = false;
-
   for (const item of habits) {
-    if (habit === item.name.toLowerCase()) {
+    if (habit.toLowerCase() === item.name.toLowerCase()) {
       addHabitInput.value = "";
       habitList.textContent = "This habit already exists";
-      habitList.style.textAlign = "Center";
-      habitList.style.fontSize = "1.3em";
-      setTimeout(() => {
-        habitList.style.textAlign = "";
-        habitList.style.fontSize = "";
-        renderHabits();
-      }, 1200);
+      formatHabitList();
       return;
     }
   }
@@ -59,11 +51,8 @@ function searchHabit(e) {
 
   const match = habits.filter((habit) => habit.name.toLowerCase() === target);
   if (match.length === 0) {
-    const h4ErrorDisplay = document.createElement("h4");
-    h4ErrorDisplay.textContent = `${target} not found.`;
-    h4ErrorDisplay.id = "searchErrorDisplay";
-    habitList.textContent = "";
-    habitList.append(h4ErrorDisplay);
+    habitList.textContent = `${target} not found.`;
+    formatHabitList();
     searchHabitInput.value = "";
     return;
   }
@@ -116,15 +105,72 @@ habitList.addEventListener("click", (e) => {
   const habitCardId = habitCard.dataset.cardId;
   const habitIndex = habits.findIndex((habit) => habit.id == habitCardId);
 
+  if (habitIndex.length === 0) return;
+
   if (e.target.classList.contains("doneBtn")) {
     habits[habitIndex].status = "completed";
   } else if (e.target.classList.contains("deleteBtn")) {
-    console.log(habitIndex);
-    console.log(habitCardId);
     habits.splice(habitIndex, 1);
   }
   storeHabits();
   renderHabits();
 });
+
+const filterBtn = document.getElementById("filterBtn");
+const filterCard = document.getElementById("filterCard");
+
+filterBtn.addEventListener("click", () => {
+  filterCard.classList.toggle("hidden");
+});
+
+filterCard.addEventListener("click", (e) => {
+  const filterActiveBtn = document.getElementById("filterActive");
+  const filterCompletedBtn = document.getElementById("filterCompleted");
+  const resetFilterBtn = document.getElementById("resetFilter");
+
+  if (e.target.classList.contains("filterActive")) {
+    resetFormatHabitList();
+    filterCompletedBtn.style.background = "";
+    resetFilterBtn.style.background = "";
+    filterActiveBtn.style.background = "lightblue";
+    const activeHabits = habits.filter((habit) => habit.status === "active");
+    if (!activeHabits.length) {
+      habitList.textContent = "No active habits";
+      formatHabitList();
+      return;
+    }
+    renderHabits(activeHabits);
+  } else if (e.target.classList.contains("filterCompleted")) {
+    resetFormatHabitList();
+    filterActiveBtn.style.background = "";
+    resetFilterBtn.style.background = "";
+    filterCompletedBtn.style.background = "lightblue";
+    const completedHabits = habits.filter(
+      (habit) => habit.status === "completed",
+    );
+    if (!completedHabits.length) {
+      habitList.textContent = "No completed habits";
+      formatHabitList();
+      return;
+    }
+    renderHabits(completedHabits);
+  } else if (e.target.classList.contains("resetFilter")) {
+    resetFormatHabitList();
+    filterActiveBtn.style.background = "";
+    filterCompletedBtn.style.background = "";
+    resetFilterBtn.style.background = "lightblue";
+    renderHabits();
+  }
+});
+
+function formatHabitList() {
+  habitList.style.textAlign = "Center";
+  habitList.style.fontSize = "1.3em";
+}
+
+function resetFormatHabitList() {
+  habitList.style.textAlign = "";
+  habitList.style.fontSize = "";
+}
 
 renderHabits();
